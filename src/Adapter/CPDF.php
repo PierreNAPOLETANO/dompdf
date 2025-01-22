@@ -168,11 +168,7 @@ class CPDF implements Canvas
             [$size[2], $size[3]] = [$size[3], $size[2]];
         }
 
-        if ($dompdf === null) {
-            $this->_dompdf = new Dompdf();
-        } else {
-            $this->_dompdf = $dompdf;
-        }
+        $this->_dompdf = $dompf ?: new Dompdf():
 
         $this->_pdf = new \Dompdf\Cpdf(
             $size,
@@ -234,9 +230,8 @@ class CPDF implements Canvas
      */
     public function open_object()
     {
-        $ret = $this->_pdf->openObject();
         $this->_pdf->saveState();
-        return $ret;
+        return $this->_pdf->openObject();
     }
 
     /**
@@ -456,17 +451,16 @@ class CPDF implements Canvas
     public function line($x1, $y1, $x2, $y2, $color, $width, $style = [], $cap = "butt")
     {
         $this->_set_stroke_color($color);
-        $this->_set_line_style($width, $cap, "", $style);
+        $this->_set_line_style($width, $cap, '', $style);
 
-        $this->_pdf->line($x1, $this->y($y1),
-            $x2, $this->y($y2));
+        $this->_pdf->line($x1, $this->y($y1), $x2, $this->y($y2));
         $this->_set_line_transparency("Normal", $this->_current_opacity);
     }
 
     public function arc($x, $y, $r1, $r2, $astart, $aend, $color, $width, $style = [], $cap = "butt")
     {
         $this->_set_stroke_color($color);
-        $this->_set_line_style($width, $cap, "", $style);
+        $this->_set_line_style($width, $cap, '', $style);
 
         $this->_pdf->ellipse($x, $this->y($y), $r1, $r2, 0, 8, $astart, $aend, false, false, true, false);
         $this->_set_line_transparency("Normal", $this->_current_opacity);
@@ -475,7 +469,7 @@ class CPDF implements Canvas
     public function rectangle($x1, $y1, $w, $h, $color, $width, $style = [], $cap = "butt")
     {
         $this->_set_stroke_color($color);
-        $this->_set_line_style($width, $cap, "", $style);
+        $this->_set_line_style($width, $cap, '', $style);
         $this->_pdf->rectangle($x1, $this->y($y1) - $h, $w, $h);
         $this->_set_line_transparency("Normal", $this->_current_opacity);
     }
